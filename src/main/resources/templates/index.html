@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+            content="width=device-width, initial-scale=1.0">
+    <link rel="icon"
+            th:href="@{/img/logo-color.png}">
+    <link rel="stylesheet"
+            th:href="@{/css/index.css}">
+    <script th:src="@{'https://api-maps.yandex.ru/2.1/?apikey='+${@environment.getProperty('yandex.maps.api.key')}+'&lang=ru_RU'}" type="text/javascript"></script>
+    <script th:src="@{/js/maps.js}"></script>
+    <title>Места</title>
+</head>
+<body>
+<main>
+    <div class="main-content">
+        <div class="title-container">
+            <img class="logo"
+                    th:src="@{/img/logo-color.png}"
+                    alt="Logo">
+            <h1 class="title">Места</h1>
+        </div>
+        <div class="map"></div>
+        <a th:href="@{/search}">
+            <button class="button">Начнём</button>
+        </a>
+    </div>
+</main>
+<footer>
+    <div class="footer-content">
+        <div class="social-icons">
+            <a href="https://github.com/ptrvsrg"
+                    target="_blank">
+                <img th:src="@{/img/github.png}"
+                        alt="GitHub">
+            </a>
+            <a href="https://t.me/ptrvsrg"
+                    target="_blank">
+                <img th:src="@{/img/telegram.png}"
+                        alt="Telegram">
+            </a>
+            <a href="https://vk.com/ptrvsrg"
+                    target="_blank">
+                <img th:src="@{/img/vk.png}"
+                        alt="VK">
+            </a>
+        </div>
+        <p>© 2023 ptrvsrg. Все права защищены.</p>
+    </div>
+</footer>
+<script>
+    ymaps.ready(function () {
+        var mapContainer = document.getElementsByClassName('map')[0];
+        createInitMap(mapContainer);
+    });
+</script>
+</body>
+</html>

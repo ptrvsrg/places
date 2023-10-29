@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" th:href="@{/img/logo-color.png}">
+    <link rel="stylesheet" th:href="@{/css/search.css}">
+    <script th:src="@{'https://api-maps.yandex.ru/2.1/?apikey='+${@environment.getProperty('yandex.maps.api.key')}+'&lang=ru_RU'}" type="text/javascript"></script>
+    <script th:src="@{/js/maps.js}"></script>
+    <title>Поиск мест</title>
+</head>
+<body>
+<header>
+    <a th:href="@{/}" class="header-logo-link">
+        <img th:src="@{/img/logo-white.png}" class="header-logo" alt="Logo">
+        Места
+    </a>
+</header>
+<main>
+    <h1 class="title">Поиск мест</h1>
+    <form class="search-bar" th:method="get" th:action="@{/search}">
+        <input type="text" class="search-input-field" placeholder="Введите место..." th:name="place_name" th:value="${place_name}">
+        <input type="submit" class="search-button" value="Поиск" disabled="disabled">
+    </form>
+    <div class="place-content">
+        <div class="searched-places">
+            <div th:each="place : ${places}">
+                <div class="searched-place">
+                    <div class="searched-place-map" th:attr="lat=${place.lat}, lng=${place.lng}, name=${place.name}, address=${place.address}"></div>
+                    <p class="searched-place-name" th:text="${place.name}"/>
+                    <p class="searched-place-address" th:text="${place.address}"/>
+                    <a class="searched-place-more" th:href="@{/place(lat=${place.lat},lng=${place.lng})}">See more</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<footer th:style="${places == null || places.isEmpty()}? 'position: absolute; bottom: 0;'">
+    <div class="footer-content">
+        <div class="social-icons">
+            <a href="https://github.com/ptrvsrg" target="_blank">
+                <img th:src="@{/img/github.png}" alt="GitHub">
+            </a>
+            <a href="https://t.me/ptrvsrg" target="_blank">
+                <img th:src="@{/img/telegram.png}" alt="Telegram">
+            </a>
+            <a href="https://vk.com/ptrvsrg" target="_blank">
+                <img th:src="@{/img/vk.png}" alt="VK">
+            </a>
+        </div>
+        <p>© 2023 ptrvsrg. Все права защищены.</p>
+    </div>
+</footer>
+<script>
+    const mapContainers = document.querySelectorAll('.searched-place-map');
+    ymaps.ready(function () {
+        mapContainers.forEach(function (mapContainer, index) {
+            const placeMap = new Map([
+                ["lat", mapContainer.getAttribute('lat')],
+                ["lng", mapContainer.getAttribute('lng')],
+                ["name", mapContainer.getAttribute('name')],
+                ["address", mapContainer.getAttribute('address')],
+            ]);
+            const place = Object.fromEntries(placeMap);
+            createPlaceMap(mapContainer, place);
+        });
+    });
+</script>
+<script>
+    const searchInput = document.querySelector('.search-input-field');
+    const searchButton = document.querySelector('.search-button');
+
+    function checkForChanges() {
+        if (searchInput.value == null || searchInput.value === '') {
+            searchButton.setAttribute('disabled', 'disabled');
+        } else {
+            searchButton.removeAttribute('disabled');
+        }
+    }
+
+    checkForChanges();
+    searchInput.addEventListener('input', checkForChanges);
+</script>
+</body>
+</html>
