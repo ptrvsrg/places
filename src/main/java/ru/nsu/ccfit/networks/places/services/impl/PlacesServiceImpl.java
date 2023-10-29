@@ -26,7 +26,7 @@ public class PlacesServiceImpl
         implements PlacesService {
 
     private static final String API_URL = "https://api.opentripmap.com/0.1/ru/places";
-    private static final Integer RADIUS = 500;
+    private static final Integer RADIUS = 1000;
 
     @Value("${opentripmap.api.key}")
     private String apiKey;
@@ -53,7 +53,7 @@ public class PlacesServiceImpl
                         .flatMap(error -> Mono.just(new PlacesNearbyException(error.getError()))))
                 .bodyToFlux(SimpleFeatureResponse.class)
                 .map(SimpleFeatureResponse::getXid)
-                .flatMap(this::searchPlaceByXid)
+                .flatMap(this::searchPlaceByXid, 2)
                 .map(placeResponse -> modelMapper.map(placeResponse, PlaceDTO.class))
                 .collectList();
     }
