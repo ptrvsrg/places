@@ -2,8 +2,9 @@ package ru.nsu.ccfit.networks.places.controllers;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.reactive.result.view.Rendering;
+import reactor.core.publisher.Mono;
 import ru.nsu.ccfit.networks.places.services.GeocodeService;
 
 @Controller
@@ -14,11 +15,15 @@ public class SearchController {
     private final GeocodeService geocodeService;
 
     @GetMapping
-    public String searchPage(@RequestParam(name = "place_name", required = false) String placeName, Model model) {
+    public Mono<Rendering> searchPage(@RequestParam(name = "place_name", required = false) String placeName) {
         if (placeName != null && !placeName.isEmpty()) {
-            model.addAttribute("place_name", placeName);
-            model.addAttribute("places", geocodeService.forwardGeocode(placeName));
+            return geocodeService.forwardGeocode(placeName)
+                    .flatMap(geocodes -> Mono.just(Rendering.view("search")
+                            .modelAttribute("place_name", placeName)
+                            .modelAttribute("places", geocodes)
+                            .build()));
         }
-        return "search";
+        return Mono.just(Rendering.view("search")
+                .build());
     }
 }
