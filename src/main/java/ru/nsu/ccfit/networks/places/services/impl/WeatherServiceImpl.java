@@ -1,8 +1,6 @@
 package ru.nsu.ccfit.networks.places.services.impl;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.Cacheable;
@@ -17,8 +15,6 @@ import ru.nsu.ccfit.networks.places.models.dtos.WeatherDTO;
 import ru.nsu.ccfit.networks.places.models.exceptions.WeatherException;
 import ru.nsu.ccfit.networks.places.services.WeatherService;
 
-import java.util.*;
-
 @Service
 @RequiredArgsConstructor
 public class WeatherServiceImpl implements WeatherService {
@@ -30,7 +26,8 @@ public class WeatherServiceImpl implements WeatherService {
 
     private final ModelMapper modelMapper;
 
-    @SneakyThrows
+
+    @Cacheable("weather")
     @Override
     public Mono<WeatherDTO> realtimeWeather(Double lat, Double lng) {
         String weatherApiUri = UriComponentsBuilder.fromHttpUrl(WEATHER_API_URL)

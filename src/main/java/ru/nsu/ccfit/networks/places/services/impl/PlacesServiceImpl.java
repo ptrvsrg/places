@@ -33,7 +33,7 @@ public class PlacesServiceImpl
 
     private final ModelMapper modelMapper;
 
-    @SneakyThrows
+    @Cacheable("places_nearby")
     @Override
     public Mono<List<PlaceDTO>> listPlacesNearby(Double lat, Double lng) {
         URI apiUri = UriComponentsBuilder.fromHttpUrl(API_URL)
@@ -59,6 +59,7 @@ public class PlacesServiceImpl
     }
 
 
+    @Cacheable("xid_place")
     public Mono<PlaceResponse> searchPlaceByXid(String xid) {
         URI apiUri = UriComponentsBuilder.fromHttpUrl(API_URL)
                 .path("/xid/" + xid)

@@ -3,6 +3,7 @@ package ru.nsu.ccfit.networks.places.services.impl;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -30,7 +31,7 @@ public class GeocodeServiceImpl implements GeocodeService {
 
     private final ModelMapper modelMapper;
 
-    @SneakyThrows
+    @Cacheable("forward_geocodes")
     @Override
     public Mono<List<GeocodeDTO>> forwardGeocode(String name) {
         URI apiUri = UriComponentsBuilder.fromHttpUrl(API_URL)
@@ -54,7 +55,7 @@ public class GeocodeServiceImpl implements GeocodeService {
                 );
     }
 
-    @SneakyThrows
+    @Cacheable("reverse_geocodes")
     @Override
     public Mono<List<GeocodeDTO>> reverseGeocode(Double lat, Double lng) {
         URI apiUri = UriComponentsBuilder.fromHttpUrl(API_URL)
