@@ -28,7 +28,7 @@ public class PlacesServiceImpl
     private static final String API_URL = "https://api.opentripmap.com/0.1/ru/places";
     private static final Integer RADIUS = 500;
 
-    @Value("${onetripmap.api.key}")
+    @Value("${opentripmap.api.key}")
     private String apiKey;
 
     private final ModelMapper modelMapper;
