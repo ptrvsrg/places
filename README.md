@@ -23,7 +23,8 @@
 
 ## Методы API
 
-1. получение локаций с координатами и названиями: https://docs.graphhopper.com/#operation/getGeocode
-2. получение погоды по координатам https://openweathermap.org/current
-3. получение списка интересных мест по координатам: https://opentripmap.io/docs#/Objects%20list/getListOfPlacesByRadius
-4. получение описания места по его id: https://opentripmap.io/docs#/Object%20properties/getPlaceByXid
+1. Получение локаций с координатами и названиями: https://docs.graphhopper.com/#operation/getGeocode
+2. Получение погоды по координатам https://openweathermap.org/current
+3. Получение списка интересных мест по координатам: https://dev.opentripmap.org/docs#/Objects%20list/getListOfPlacesByRadius
+4. Получение описания места по его id: https://dev.opentripmap.org/docs#/Object%20properties/getPlaceByXid
+5. Отображение карты по координатам: https://yandex.ru/dev/maps/jsbox/2.1/placemark
