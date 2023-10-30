@@ -29,7 +29,7 @@
                     <div class="searched-place-map" th:attr="lat=${place.lat}, lng=${place.lng}, name=${place.name}, address=${place.address}"></div>
                     <p class="searched-place-name" th:text="${place.name}"/>
                     <p class="searched-place-address" th:text="${place.address}"/>
-                    <a class="searched-place-more" th:href="@{/place(lat=${place.lat},lng=${place.lng})}">See more</a>
+                    <a class="searched-place-more" th:href="@{/place(lat=${place.lat},lng=${place.lng})}">Подробнее</a>
                 </div>
             </div>
         </div>
