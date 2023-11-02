@@ -31,7 +31,7 @@
                 </p>
                 <p class="content-subtitle" th:if="${weather.getTemperature()}" th:text="${'Температура: ' + weather.getTemperature() + '°'}"/>
                 <p class="content-subtitle" th:if="${weather.getFeelsLikeTemperature()}" th:text="${'Ощущается: ' + weather.getFeelsLikeTemperature() + '°'}"/>
-                <p class="content-subtitle" th:if="${weather.getWindDirection() != null && weather.getWindSpeed() != null}" th:text="${'Ветер: ' + weather.getWindDirection() + ' ' + weather.getWindSpeed() + ' м/с'}"/>
+                <p class="content-subtitle" th:if="${weather.getWindDirection() != null && weather.getWindSpeed() != null}" th:text="${'Ветер: ' + weather.getWindSpeed() + ' м/с ' + weather.getWindDirection()}"/>
                 <p class="content-subtitle" th:if="${weather.getPressure()}" th:text="${'Давление: ' + weather.getPressure() + ' мм. рт. ст.'}"/>
                 <p class="content-subtitle" th:if="${weather.getHumidity()}" th:text="${'Влажность: ' + weather.getHumidity() + '%'}"/>
             </div>
