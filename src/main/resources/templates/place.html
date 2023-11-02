@@ -24,7 +24,7 @@
             <div class="place-map"></div>
         </div>
         <div class="place-info-content">
-            <div class="weather-info">
+            <div class="weather-info" th:if="${weather}">
                 <p class="content-subtitle">
                     <img th:src="${weather.getIconUrl()}" alt="" height="70px"/>
                     <span th:text="${weather.getDesc()}"/>
@@ -34,6 +34,9 @@
                 <p class="content-subtitle" th:if="${weather.getWindDirection() != null && weather.getWindSpeed() != null}" th:text="${'Ветер: ' + weather.getWindDirection() + ' ' + weather.getWindSpeed() + ' м/с'}"/>
                 <p class="content-subtitle" th:if="${weather.getPressure()}" th:text="${'Давление: ' + weather.getPressure() + ' мм. рт. ст.'}"/>
                 <p class="content-subtitle" th:if="${weather.getHumidity()}" th:text="${'Влажность: ' + weather.getHumidity() + '%'}"/>
+            </div>
+            <div class="weather-info" th:unless="${weather}">
+                <p class="content-subtitle">Информация о погоде не найдена</p>
             </div>
         </div>
     </div>
