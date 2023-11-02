@@ -15,6 +15,7 @@ import ru.nsu.ccfit.networks.places.models.api.responses.PlaceResponse;
 import ru.nsu.ccfit.networks.places.models.api.responses.SimpleFeatureErrorResponse;
 import ru.nsu.ccfit.networks.places.models.api.responses.SimpleFeatureResponse;
 import ru.nsu.ccfit.networks.places.models.dtos.PlaceDTO;
+import ru.nsu.ccfit.networks.places.models.exceptions.PlacesNearbyDescriptionException;
 import ru.nsu.ccfit.networks.places.models.exceptions.PlacesNearbyException;
 import ru.nsu.ccfit.networks.places.services.PlacesService;
 
@@ -75,7 +76,7 @@ public class PlacesServiceImpl
                 .uri(apiUri)
                 .retrieve()
                 .onStatus(HttpStatusCode::isError, response -> response.bodyToMono(PlaceErrorResponse.class)
-                        .flatMap(error -> Mono.error(new PlacesNearbyException(error.getError()))))
+                        .flatMap(error -> Mono.error(new PlacesNearbyDescriptionException(error.getError()))))
                 .bodyToMono(PlaceResponse.class);
     }
 }
