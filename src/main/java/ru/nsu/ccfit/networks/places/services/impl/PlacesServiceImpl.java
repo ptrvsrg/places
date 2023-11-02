@@ -29,7 +29,7 @@ public class PlacesServiceImpl
         implements PlacesService {
 
     private static final String API_URL = "https://api.opentripmap.com/0.1/ru/places";
-    private static final Integer RADIUS = 2000;
+    private static final Integer RADIUS = 5000;
 
     @Value("${opentripmap.api.key}")
     private String apiKey;
