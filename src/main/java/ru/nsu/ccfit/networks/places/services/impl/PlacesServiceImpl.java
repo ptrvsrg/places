@@ -53,8 +53,9 @@ public class PlacesServiceImpl
                         .flatMap(error -> Mono.just(new PlacesNearbyException(error.getError()))))
                 .bodyToFlux(SimpleFeatureResponse.class)
                 .map(SimpleFeatureResponse::getXid)
-                .take(10)
-                .flatMap(this::searchPlaceByXid, 2)
+                .flatMap(this::searchPlaceByXid)
+                .onErrorContinue(PlacesNearbyDescriptionException.class,
+                        (e, o) -> log.error(e.getLocalizedMessage(), e))
                 .map(placeResponse -> modelMapper.map(placeResponse, PlaceDTO.class))
                 .collectList();
     }
